@@ -13,6 +13,9 @@
         <None Update="Snail.png">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
+        <None Include="Themes\**"
+              CopyToOutputDirectory="PreserveNewest"
+              Link="Themes\%(RecursiveDir)%(Filename)%(Extension)"/>
     </ItemGroup>
 
     <ItemGroup>

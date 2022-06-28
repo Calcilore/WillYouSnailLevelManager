@@ -15,6 +15,14 @@ public static class PrefrenceManager {
             File.WriteAllText("config.json", JsonSerializer.Serialize(jsonThing));
         }
     }
+    
+    public static bool DarkTheme {
+        get => jsonThing.DarkTheme;
+        set {
+            jsonThing.DarkTheme = value;
+            File.WriteAllText("config.json", JsonSerializer.Serialize(jsonThing));
+        }
+    }
 
     public static void Init() {
         if (!File.Exists("config.json")) {
@@ -25,6 +33,8 @@ public static class PrefrenceManager {
             } else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 WysFilePath = "%localappdata%\\Will_You_Snail\\MyFirstLevel.lvl";
             }
+
+            DarkTheme = true;
             return;
         }
         

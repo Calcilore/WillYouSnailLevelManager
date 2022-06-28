@@ -17,6 +17,7 @@ namespace WYSLevelManager {
         [UI] public Button SaveCurrentButton = null;
         [UI] public Button AddNewButton = null;
         [UI] public Button RefreshButton = null;
+        [UI] public CheckButton DarkThemeCheckBox = null;
         [UI] public FileFilter LevelFileFileFilter = null;
         [UI] public Menu LevelContextMenu = null;
         [UI] public MenuItem DeleteLevelButton = null;
@@ -41,10 +42,20 @@ namespace WYSLevelManager {
             LevelFileFileFilter.Name = "Level Files";
             
             PrefrenceManager.Init();
+    
+            // Dark Theme
+            DarkThemeCheckBox.Active = PrefrenceManager.DarkTheme;
+            SetTheme(PrefrenceManager.DarkTheme);
+            
+            DarkThemeCheckBox.Clicked += (_, _) => {
+                PrefrenceManager.DarkTheme = DarkThemeCheckBox.Active;
+                SetTheme(PrefrenceManager.DarkTheme);
+            };
+            
+            // Will You Snail Directory
             WYSDirChooser.SetFilename(PrefrenceManager.WysFilePath);
 
-            WYSDirChooser.FileSet += (sender, args) => {
-                Console.WriteLine($"hi: {WYSDirChooser.Filename}");
+            WYSDirChooser.FileSet += (_, _) => {
                 PrefrenceManager.WysFilePath = WYSDirChooser.Filename;
             };
 
@@ -54,6 +65,15 @@ namespace WYSLevelManager {
             Application.Invoke(delegate {
                 Resize(1200, 600);
             });
+        }
+
+        private void SetTheme(bool dark) {
+            CssProvider provider = new CssProvider();
+            string path = dark ? "Themes/gtk-dark/gtk.css" : "Themes/gtk/gtk.css";
+            Console.WriteLine($"{PrefrenceManager.DarkTheme}: {path}");
+            provider.LoadFromPath(path);
+                
+            StyleContext.AddProviderForScreen(Screen.Default, provider, 800);
         }
         
         public void CreateNewLevel(UniqueId id, string name, string version, string dimensions) {

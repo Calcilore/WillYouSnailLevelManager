@@ -109,6 +109,19 @@
           </object>
         </child>
         <child>
+          <object class="GtkCheckButton" id="DarkThemeCheckBox">
+            <property name="label" translatable="yes">Dark Theme</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkButton" id="RefreshButton">
             <property name="label" translatable="yes">Refresh</property>
             <property name="visible">True</property>
@@ -117,7 +130,7 @@
           </object>
           <packing>
             <property name="pack-type">end</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -129,7 +142,7 @@
           </object>
           <packing>
             <property name="pack-type">end</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -141,7 +154,7 @@
           </object>
           <packing>
             <property name="pack-type">end</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </object>
