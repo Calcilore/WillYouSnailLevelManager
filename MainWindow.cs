@@ -25,12 +25,14 @@ namespace WYSLevelManager {
         [UI] public FileChooserButton WYSDirChooser = null;
 
         private LevelManager levelManager;
+        private CssProvider cssProvider;
 
         public MainWindow() : this(new Builder("MainWindow.glade")) { }
 
         private MainWindow(Builder builder) : base(builder.GetRawOwnedObject("MainWindow")) {
             Instance = this;
             builder.Autoconnect(this);
+            cssProvider = new CssProvider();
 
             DeleteEvent += Window_DeleteEvent;
             SaveCurrentButton.Clicked += delegate { levelManager.SaveCurrentLevel(); };
@@ -68,12 +70,14 @@ namespace WYSLevelManager {
         }
 
         private void SetTheme(bool dark) {
-            CssProvider provider = new CssProvider();
             string path = dark ? "Themes/gtk-dark/gtk.css" : "Themes/gtk/gtk.css";
-            Console.WriteLine($"{PrefrenceManager.DarkTheme}: {path}");
-            provider.LoadFromPath(path);
+            cssProvider.LoadFromPath(path);
                 
-            StyleContext.AddProviderForScreen(Screen.Default, provider, 800);
+            ReApplyCurrentTheme();
+        }
+
+        private void ReApplyCurrentTheme() {
+            StyleContext.AddProviderForScreen(Screen.Default, cssProvider, 800);
         }
         
         public void CreateNewLevel(UniqueId id, string name, string version, string dimensions) {
@@ -102,6 +106,8 @@ namespace WYSLevelManager {
             
             LevelsBox.Add(b);
             b.ShowAll();
+            
+            ReApplyCurrentTheme();
         }
 
         private void Window_DeleteEvent(object sender, DeleteEventArgs a) {

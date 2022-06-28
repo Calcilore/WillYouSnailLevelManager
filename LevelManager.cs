@@ -204,7 +204,7 @@ public class LevelManager {
             dialog.Destroy();
             
             new Thread(() => {
-                file.CopyTo(Path.Combine(LevelDir, $"{file.Name}.lvl"));
+                file.CopyTo(Path.Combine(LevelDir, file.Name));
                 
                 RefreshLevels();
                 Application.Invoke(delegate {
